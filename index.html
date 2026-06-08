@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatus - Plataforma Web Gamificada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar glass-panel">
+            <div class="brand">
+                <i class="fa-solid fa-gamepad brand-icon"></i>
+                <h1>Chatus</h1>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active"><a href="#" data-section="home"><i class="fa-solid fa-house"></i> Inici</a></li>
+                <li><a href="#" data-section="ai-chat"><i class="fa-solid fa-robot"></i> Xat amb IA</a></li>
+                <li><a href="#" data-section="lessons"><i class="fa-solid fa-book"></i> Cursos</a></li>
+                <li><a href="#" data-section="quizzes"><i class="fa-solid fa-bolt"></i> Reptes</a></li>
+                <li><a href="#" data-section="minigames"><i class="fa-solid fa-puzzle-piece"></i> Minijocs</a></li>
+                <li><a href="#" data-section="social"><i class="fa-solid fa-users"></i> Comunitat</a></li>
+                <li><a href="#" data-section="store"><i class="fa-solid fa-shop"></i> Botiga</a></li>
+                <li><a href="#" data-section="ranking"><i class="fa-solid fa-trophy"></i> Rànquing</a></li>
+            </ul>
+
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="fa-solid fa-sun light-icon" style="display:none;"></i>
+                <i class="fa-solid fa-moon dark-icon"></i>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar (User Info) -->
+            <header class="topbar">
+                <div class="search-bar glass-panel">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Cerca amics, reptes, minijocs...">
+                </div>
+
+                <div class="user-stats glass-panel">
+                    <div class="stat coin">
+                        <i class="fa-solid fa-coins"></i> <span id="coin-count">1250</span>
+                    </div>
+                    <div class="stat gem">
+                        <i class="fa-regular fa-gem"></i> <span id="gem-count">45</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aleix" alt="Avatar">
+                            <span class="status online"></span>
+                        </div>
+                        <div class="user-info">
+                            <span class="username">AleixGamer</span>
+                            <span class="level">Nv. 5 - Novat</span>
+                            <div class="xp-bar-container">
+                                <div class="xp-bar" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content" id="dashboard-content">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner glass-panel gradient-border">
+                    <div class="banner-text">
+                        <h2>Benvingut de nou, Aleix! 🚀</h2>
+                        <p>Tens un nou repte diari de programació disponible. Completa'l per guanyar 50 monedes i 1 gemma especial!</p>
+                        <button class="btn btn-primary">Veure Reptes</button>
+                    </div>
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ChatusAI2" alt="Chatus AI" class="ai-mascot floating">
+                </div>
+
+                <!-- Bento Grid Sections -->
+                <div class="bento-grid">
+                    <!-- Daily Quizzes -->
+                    <div class="bento-item glass-panel">
+                        <div class="bento-header">
+                            <h3><i class="fa-solid fa-question-circle"></i> Concurs del Dia</h3>
+                            <span class="badge">Multiplayer</span>
+                        </div>
+                        <p>Participa en el concurs Kahoot en directe amb altres usuaris i guanya exp extra!</p>
+                        <button class="btn btn-secondary">Unir-se ara</button>
+                    </div>
+
+                    <!-- Minigames Focus -->
+                    <div class="bento-item glass-panel minigame-card">
+                        <div class="bento-header">
+                            <h3><i class="fa-solid fa-ghost"></i> Minijoc Destacat</h3>
+                        </div>
+                        <div class="game-preview pacman-bg">
+                            <h4>Pac-Man</h4>
+                            <p>Mode Competitiu (Temporada 2)</p>
+                            <button class="btn btn-play"><i class="fa-solid fa-play"></i> Jugar</button>
+                        </div>
+                    </div>
+
+                    <!-- Friends Activity -->
+                    <div class="bento-item glass-panel">
+                        <div class="bento-header">
+                            <h3><i class="fa-solid fa-user-friends"></i> Amics Connectats</h3>
+                        </div>
+                        <ul class="friends-list">
+                            <li>
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Friend 1">
+                                <div class="friend-info">
+                                    <span>MariaV_04</span>
+                                    <small>Jugant a Snake Multijugador</small>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pol" alt="Friend 2">
+                                <div class="friend-info">
+                                    <span>Pol_Destroyer</span>
+                                    <small>Creant un nou repte d'Història</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- AI Assistant Quick Launch -->
+                    <div class="bento-item glass-panel ai-chat-card">
+                        <div class="bento-header">
+                            <h3><i class="fa-solid fa-robot"></i> Assistent IA</h3>
+                        </div>
+                        <p>Tens algun dubte amb les teves lliçons o vols que et creï un nou concurs de qualsevol tema?</p>
+                        <div class="chat-input-preview">
+                            <input type="text" placeholder="Pregunta'm el que vulguis...">
+                            <button><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
