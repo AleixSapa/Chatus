@@ -61,6 +61,36 @@ body {
     border-radius: 24px;
 }
 
+/* Auth View */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.2), transparent 50%);
+}
+.login-box {
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.auth-input {
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: 12px;
+    color: var(--text-primary);
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+body.light-theme .auth-input {
+    background: rgba(0,0,0,0.05);
+}
+
 /* Sidebar */
 .sidebar {
     width: 280px;
@@ -543,6 +573,175 @@ body.light-theme .chat-input-preview input {
 .chat-input-preview button:hover {
     background: var(--neon-blue);
     transform: scale(1.05);
+}
+
+/* AI Chat View */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 500px;
+    padding: 30px;
+}
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 20px;
+}
+.message {
+    display: flex;
+    gap: 15px;
+    max-width: 85%;
+}
+.ai-message {
+    align-self: flex-start;
+}
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+.message img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--dark-bg);
+    border: 2px solid var(--glass-border);
+}
+.msg-bubble {
+    padding: 18px 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    line-height: 1.5;
+    font-size: 16px;
+    box-shadow: var(--glass-shadow);
+}
+body.light-theme .msg-bubble {
+    background: rgba(0,0,0,0.05);
+}
+.ai-message .msg-bubble {
+    background: rgba(139, 92, 246, 0.15);
+    border-top-left-radius: 0;
+}
+.user-message .msg-bubble {
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+    color: white;
+    border-top-right-radius: 0;
+}
+.chat-input-area {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+.chat-input-area input {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    padding: 18px 25px;
+    border-radius: 20px;
+    color: var(--text-primary);
+    outline: none;
+    font-size: 16px;
+}
+body.light-theme .chat-input-area input {
+    background: rgba(0,0,0,0.05);
+}
+.btn-send {
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+    border: none;
+    color: white;
+    width: 60px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+.btn-send:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+}
+
+.score {
+    font-weight: 800;
+    font-size: 18px;
+    margin-left: auto;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+.toast {
+    background: var(--dark-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--neon-purple);
+    color: var(--text-primary);
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+}
+body.light-theme .toast {
+    background: white;
+    color: black;
+}
+@keyframes slideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; margin-top: -50px; }
+}
+
+/* Game Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-container {
+    width: 90%;
+    max-width: 480px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--dark-bg);
+}
+body.light-theme .game-container {
+    background: white;
+}
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 15px;
+}
+.game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 /* Custom Scrollbar */

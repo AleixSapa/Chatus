@@ -9,7 +9,41 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="dark-theme">
-    <div class="app-container">
+    <!-- Auth Section -->
+    <div id="auth-section" class="auth-container">
+        <div class="glass-panel login-box">
+            <div style="text-align:center; margin-bottom:20px;">
+                <i class="fa-solid fa-gamepad" style="font-size:50px; color:var(--neon-purple);"></i>
+                <h1 style="font-size:38px; font-weight:800; background:linear-gradient(135deg,var(--neon-purple),var(--neon-blue),var(--neon-pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Chatus</h1>
+                <p style="color:var(--text-secondary); margin-top:5px;">La plataforma on jugar i aprendre és el mateix</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active-form">
+                <h2 style="text-align:center; margin-bottom:20px;">Inicia Sessió</h2>
+                <input type="text" id="login-username" placeholder="Nom d'usuari" class="auth-input" required>
+                <input type="password" id="login-password" placeholder="Contrasenya" class="auth-input" required>
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:5px;"><i class="fa-solid fa-gamepad"></i> Entrar a jugar!</button>
+                <p style="text-align:center; margin-top:20px; color:var(--text-secondary);">No tens compte? <a href="#" id="go-register" style="color:var(--neon-blue); cursor:pointer;">Registra't ara</a></p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form" style="display:none;">
+                <h2 style="text-align:center; margin-bottom:20px;">Crea el teu compte</h2>
+                <input type="text" id="reg-username" placeholder="Nom d'usuari (ex: AleixGamer)" class="auth-input" required>
+                <input type="email" id="reg-email" placeholder="Correu electrònic" class="auth-input" required>
+                <input type="password" id="reg-password" placeholder="Contrasenya" class="auth-input" required>
+                <input type="password" id="reg-password2" placeholder="Repeteix la contrasenya" class="auth-input" required>
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:5px;"><i class="fa-solid fa-star"></i> Crear compte!</button>
+                <p style="text-align:center; margin-top:20px; color:var(--text-secondary);">Ja tens compte? <a href="#" id="go-login" style="color:var(--neon-blue); cursor:pointer;">Inicia Sessió</a></p>
+            </form>
+
+            <p id="auth-error" style="text-align:center; margin-top:10px; color:#f87171; display:none;"></p>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="app-container" id="app-dashboard" style="display:none;">
         <!-- Sidebar -->
         <nav class="sidebar glass-panel">
             <div class="brand">
@@ -26,7 +60,12 @@
                 <li><a href="#" data-section="social"><i class="fa-solid fa-users"></i> Comunitat</a></li>
                 <li><a href="#" data-section="store"><i class="fa-solid fa-shop"></i> Botiga</a></li>
                 <li><a href="#" data-section="ranking"><i class="fa-solid fa-trophy"></i> Rànquing</a></li>
+                <li><a href="#" data-section="profile"><i class="fa-solid fa-circle-user"></i> Perfil</a></li>
+                <li><a href="#" data-section="achievements"><i class="fa-solid fa-medal"></i> Insígnies</a></li>
             </ul>
+            <button id="logout-btn" class="btn btn-secondary" style="margin-top:15px; width:100%; display:flex; align-items:center; gap:10px; justify-content:center;">
+                <i class="fa-solid fa-right-from-bracket"></i> Tancar Sessió
+            </button>
 
             <div class="theme-toggle" id="theme-toggle">
                 <i class="fa-solid fa-sun light-icon" style="display:none;"></i>
@@ -45,37 +84,40 @@
 
                 <div class="user-stats glass-panel">
                     <div class="stat coin">
-                        <i class="fa-solid fa-coins"></i> <span id="coin-count">1250</span>
+                        <i class="fa-solid fa-coins"></i> <span id="coin-count">0</span>
                     </div>
                     <div class="stat gem">
-                        <i class="fa-regular fa-gem"></i> <span id="gem-count">45</span>
+                        <i class="fa-regular fa-gem"></i> <span id="gem-count">0</span>
                     </div>
                     <div class="user-profile">
                         <div class="avatar">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aleix" alt="Avatar">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aleix" alt="Avatar" id="user-avatar-img">
                             <span class="status online"></span>
                         </div>
                         <div class="user-info">
-                            <span class="username">AleixGamer</span>
-                            <span class="level">Nv. 5 - Novat</span>
+                            <span class="username" id="display-username">AleixGamer</span>
+                            <span class="level">Nv. 1 - Nou</span>
                             <div class="xp-bar-container">
-                                <div class="xp-bar" style="width: 60%;"></div>
+                                <div class="xp-bar" style="width: 0%;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- Dashboard Content -->
-            <div class="dashboard-content" id="dashboard-content">
+            <!-- Dynamic Views Container -->
+            <div id="views-container" style="flex: 1;">
+            
+            <!-- Home View -->
+            <div class="dashboard-content view-section active" id="view-home">
                 <!-- Welcome Banner -->
                 <div class="welcome-banner glass-panel gradient-border">
                     <div class="banner-text">
-                        <h2>Benvingut de nou, Aleix! 🚀</h2>
-                        <p>Tens un nou repte diari de programació disponible. Completa'l per guanyar 50 monedes i 1 gemma especial!</p>
-                        <button class="btn btn-primary">Veure Reptes</button>
+                        <h2>Benvingut a Chatus, <span id="welcome-name">Aleix</span>! 🚀</h2>
+                        <p>Aquest és el teu primer dia! Comença a fer cursos i minijocs per guanyar experiència i pujar de Nivell Nou a Principiant!</p>
+                        <button class="btn btn-primary" onclick="document.querySelector('[data-section=\'lessons\']').click()">Veure Cursos</button>
                     </div>
-                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ChatusAI2" alt="Chatus AI" class="ai-mascot floating">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Chatu" alt="Chatu" class="ai-mascot floating">
                 </div>
 
                 <!-- Bento Grid Sections -->
@@ -138,8 +180,288 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Other Views -->
+            <div class="dashboard-content view-section" id="view-ai-chat" style="display: none;">
+                <div class="chat-container glass-panel">
+                    <div class="chat-messages">
+                        <div class="message ai-message">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Chatu" alt="Chatu">
+                            <div class="msg-bubble">Hola Aleix! Sóc la Chatu, la teva assistent virtual. Vols que preparem un repte de matemàtiques o d'història avui, o prefereixes jugar a algun joc?</div>
+                        </div>
+                        <div class="message user-message">
+                            <div class="msg-bubble">Vull un repte interactiu sobre el Sistema Solar multijugador per poder jugar amb els meus amics del grup.</div>
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aleix" alt="User">
+                        </div>
+                        <div class="message ai-message">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Chatu" alt="Chatu">
+                            <div class="msg-bubble">Fet! He generat les preguntes en format Multijugador en temps real. La sala ja està oberta, el codi d'accés és <strong>#ASTRO-99</strong>.<br> <button class="btn btn-primary" style="margin-top:15px; padding: 8px 16px; font-size:14px;">Entrar a la sala</button></div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" placeholder="Escriu un missatge a la IA per generar reptes...">
+                        <button class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-lessons" style="display: none;">
+                <div class="bento-header" style="margin-bottom: -10px;"><h2>Els teus cursos d'Aprenentatge 📚</h2></div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel">
+                        <h3><i class="fa-solid fa-code"></i> Introducció a Python</h3>
+                        <p>Nivell: Principiant. Aprèn les bases de la programació fent mini-reptes interactius.</p>
+                        <div class="xp-bar-container" style="width: 100%; margin: 10px 0;"><div class="xp-bar" style="width: 0%;"></div></div>
+                        <button class="btn btn-secondary">Començar Curs (0%)</button>
+                    </div>
+                    <div class="bento-item glass-panel">
+                        <h3><i class="fa-solid fa-earth-europe"></i> Geografia Mundial</h3>
+                        <p>Nivell: Aprenent. Descobreix països i capitals posicionant-los als mapes correctament.</p>
+                        <div class="xp-bar-container" style="width: 100%; margin: 10px 0;"><div class="xp-bar" style="width: 0%;"></div></div>
+                        <button class="btn btn-secondary">Començar Curs (0%)</button>
+                    </div>
+                    <div class="bento-item glass-panel" style="border: 2px dashed var(--neon-purple); background: rgba(139,92,246,0.05); text-align: center; justify-content: center; align-items: center; cursor: pointer;">
+                        <h3 style="opacity: 0.8;"><i class="fa-solid fa-plus"></i> Descobrir més cursos</h3>
+                        <p style="opacity: 0.7;">Explora centenars de lliçons creades per la comunitat i la IA.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-quizzes" style="display: none;">
+                <div class="welcome-banner glass-panel gradient-border" style="padding: 30px;">
+                    <div class="banner-text">
+                        <h2>Reptes Diaris Actius ⚡</h2>
+                        <p>Completa 3 reptes per obtenir el cofre llegendari d'aquesta setmana de recompenses.</p>
+                    </div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel">
+                        <h3>🧩 Repte Lògic Multijugador</h3>
+                        <p>Resol aquests trencaclosques en menys de 2 minuts i guanya els teus rivals per rebre més XP.</p>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <span class="badge" style="background:#FBBF24; color:black;">+150 🪙</span>
+                            <span class="badge" style="background:#06B6D4;">+5 💎</span>
+                            <span class="badge" style="background:#10B981;">+300 XP</span>
+                        </div>
+                        <button class="btn btn-play" style="margin-top:15px;"><i class="fa-solid fa-play"></i> Participar ara</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-minigames" style="display: none;">
+                <div class="bento-header" style="margin-bottom: -10px;"><h2>Saló Recreatiu - Minijocs 🎮</h2></div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel minigame-card">
+                        <div class="game-preview pacman-bg">
+                            <h4 style="color: white; font-size: 28px; z-index: 2; font-weight: 800;">Pac-Man</h4>
+                            <p style="color: white; z-index: 2;">Temporada 2 - Torneig Mundial</p>
+                            <button class="btn btn-play" style="margin-top: 10px;" id="btn-pacman"><i class="fa-solid fa-play"></i> Jugar</button>
+                        </div>
+                    </div>
+                    <div class="bento-item glass-panel minigame-card">
+                        <div class="game-preview" style="background: linear-gradient(135deg, #0f380f, #1a4a1a); position: relative;">
+                            <h4 style="color: white; font-size: 28px; z-index: 2; font-weight: 800;">Snake VS Amics</h4>
+                            <p style="color: white; z-index: 2;">La serp on gana el més ràpid</p>
+                            <button class="btn btn-play" style="margin-top: 10px;" id="btn-snake"><i class="fa-solid fa-play"></i> Jugar</button>
+                        </div>
+                    </div>
+                    <div class="bento-item glass-panel minigame-card">
+                        <div class="game-preview" style="background: linear-gradient(135deg, #2a0845, #6441A5); position: relative;">
+                            <h4 style="color: white; font-size: 28px; z-index: 2; font-weight: 800;">Space Invaders</h4>
+                            <p style="color: white; z-index: 2;">Posa a prova la teva punteria</p>
+                            <button class="btn btn-play" style="margin-top: 10px;" id="btn-space"><i class="fa-solid fa-play"></i> Jugar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-social" style="display: none;">
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel" style="grid-column: span 2;">
+                        <h3><i class="fa-solid fa-users"></i> Els meus Grups i Clubs</h3>
+                        <ul class="friends-list" style="margin-top: 15px;">
+                            <li style="padding: 15px;">
+                                <div style="font-size: 35px; margin-right: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 15px;">🏰</div>
+                                <div class="friend-info">
+                                    <span style="font-size: 18px;">Els Exploradors del Codi (Club VIP)</span>
+                                    <small>32/50 Membres • 5 usuaris jugant un minijoc</small>
+                                </div>
+                                <div style="display: flex; margin-left: auto; gap: 10px;">
+                                    <button class="btn btn-primary">Obrir el Xat del Club</button>
+                                    <button class="btn btn-secondary btn-multiplayer"><i class="fa-solid fa-gamepad"></i> Jugar amb el Club</button>
+                                </div>
+                            </li>
+                            <li style="padding: 15px; border: 2px dashed rgba(255,255,255,0.2); background: transparent; justify-content: center; cursor: pointer;">
+                                <span style="font-weight: bold; color: var(--text-secondary);"><i class="fa-solid fa-plus"></i> Crear un nou Club</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-store" style="display: none;">
+                <div class="welcome-banner glass-panel gradient-border" style="padding: 30px; display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="font-size: 30px;">Botiga de Personalització 🛒</h2>
+                        <div style="font-size: 24px; font-weight: 800;">Les teves Monedes: <span style="color: var(--coin-color);"><i class="fa-solid fa-coins"></i> 1250</span></div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel" style="text-align: center; align-items: center; padding: 30px;">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pro&accessories=glasses" alt="Avatar VIP" style="width:120px; border-radius:50%; margin-bottom: 15px; background:linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); padding: 5px;">
+                        <h3 style="font-size: 22px;">Pack d'Avatar Ciberpunk</h3>
+                        <p>Dona't un aspecte futurista i destacat.</p>
+                        <button class="btn btn-primary" style="margin-top:15px; width: 100%;"><i class="fa-solid fa-coins" style="color:var(--coin-color)"></i> Comprar per 5,000</button>
+                    </div>
+                    <div class="bento-item glass-panel" style="text-align: center; align-items: center; padding: 30px;">
+                        <div style="font-size: 80px; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));">🦊</div>
+                        <h3 style="font-size: 22px;">Mascota: Guineu de Foc</h3>
+                        <p>Et donarà un impuls permanent de +5% d'Experiència.</p>
+                        <button class="btn btn-primary" style="margin-top:15px; width: 100%; background: linear-gradient(135deg, #06B6D4, #3B82F6);"><i class="fa-regular fa-gem" style="color:white"></i> Comprar per 150 Gemmes</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content view-section" id="view-ranking" style="display: none;">
+                <div class="welcome-banner glass-panel gradient-border" style="padding: 30px;">
+                    <h2 style="font-size: 32px;"><i class="fa-solid fa-crown" style="color: #FBBF24;"></i> Rànquing Global - Temporada 3</h2>
+                    <ul class="friends-list" style="margin-top: 25px;">
+                        <li style="background: rgba(251, 191, 36, 0.15); border: 1px solid var(--coin-color); padding: 15px;">
+                            <strong style="color: var(--coin-color); font-size: 24px; min-width: 40px;">#1</strong>
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=King" alt="Top 1" style="width: 50px; height: 50px; background: #fbbf24;">
+                            <div class="friend-info" style="flex: 1;">
+                                <span style="font-size: 20px;">DarkKnight99</span>
+                                <small>Nivell: Llegenda (99,999 XP)</small>
+                            </div>
+                            <div class="score"><i class="fa-solid fa-trophy" style="color: #FBBF24;"></i> Or</div>
+                        </li>
+                        <li style="background: rgba(203, 213, 225, 0.1); border: 1px solid #cbd5e1; padding: 15px;">
+                            <strong style="font-size: 24px; color: #cbd5e1; min-width: 40px;">#2</strong>
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Queen" alt="Top 2" style="width: 50px; height: 50px; background: #cbd5e1;">
+                            <div class="friend-info" style="flex: 1;">
+                                <span style="font-size: 20px;">MariaV_04</span>
+                                <small>Nivell: Expert (85,420 XP)</small>
+                            </div>
+                            <div class="score"><i class="fa-solid fa-medal" style="color: #cbd5e1;"></i> Plata</div>
+                        </li>
+                        <li style="background: rgba(180, 83, 9, 0.1); border: 1px solid #b45309; padding: 15px;">
+                            <strong style="font-size: 24px; color: #b45309; min-width: 40px;">#3</strong>
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pol" alt="Top 3" style="width: 50px; height: 50px; background: #b45309;">
+                            <div class="friend-info" style="flex: 1;">
+                                <span style="font-size: 20px;">Pol_Destroyer</span>
+                                <small>Nivell: Dominant (72,100 XP)</small>
+                            </div>
+                            <div class="score"><i class="fa-solid fa-medal" style="color: #b45309;"></i> Bronze</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Profile View -->
+            <div class="dashboard-content view-section" id="view-profile" style="display: none;">
+                <div class="welcome-banner glass-panel gradient-border" style="padding:30px; gap:30px;">
+                    <div style="display:flex; align-items:center; gap:25px; flex:1;">
+                        <div class="avatar" style="width:90px; height:90px;">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aleix" id="profile-avatar" style="width:100%; height:100%; border-radius:50%;">
+                        </div>
+                        <div>
+                            <h2 id="profile-username" style="font-size:30px; font-weight:800;">AleixGamer</h2>
+                            <span class="badge" style="background: linear-gradient(135deg,var(--neon-purple),var(--neon-pink));">🌟 Nivell 1 - Nou</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center;">
+                        <i class="fa-solid fa-coins" style="font-size:40px; color:var(--coin-color);"></i>
+                        <h3>Monedes</h3>
+                        <p id="profile-coins" style="font-size:36px; font-weight:800; color:var(--coin-color);">0</p>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center;">
+                        <i class="fa-regular fa-gem" style="font-size:40px; color:var(--gem-color);"></i>
+                        <h3>Gemmes</h3>
+                        <p id="profile-gems" style="font-size:36px; font-weight:800; color:var(--gem-color);">0</p>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center;">
+                        <i class="fa-solid fa-star" style="font-size:40px; color:var(--neon-purple);"></i>
+                        <h3>Experiència (XP)</h3>
+                        <p id="profile-xp" style="font-size:36px; font-weight:800; color:var(--neon-purple);">0</p>
+                    </div>
+                    <div class="bento-item glass-panel">
+                        <h3><i class="fa-solid fa-sliders"></i> Configuració del Perfil</h3>
+                        <p style="color:var(--text-secondary);">Canvia el teu nom d'usuari o contrasenya:</p>
+                        <input type="text" class="auth-input" placeholder="Nou nom d'usuari" style="margin-bottom:10px;">
+                        <button class="btn btn-primary">Guardar Canvis</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements View -->
+            <div class="dashboard-content view-section" id="view-achievements" style="display: none;">
+                <div class="bento-header"><h2><i class="fa-solid fa-medal" style="color:var(--neon-pink);"></i> Insígnies i Assoliments</h2></div>
+                <div class="bento-grid">
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">🏆</div>
+                        <h3>Primera Victòria</h3>
+                        <p>Guanya el teu primer concurs o minijoc per desbloquejar-la!</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">📚</div>
+                        <h3>Estudiant Dedicat</h3>
+                        <p>Completa el teu primer curs de la plataforma.</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">🤖</div>
+                        <h3>Amic de la Chatu</h3>
+                        <p>Parla amb la Chatu 10 vegades per guanyar-la!</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">🐍</div>
+                        <h3>Serpent Mestre</h3>
+                        <p>Aconsegueix 10 punts al joc Snake.</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">👥</div>
+                        <h3>Creador de Comunitat</h3>
+                        <p>Crea el teu primer Club i afegeix 3 amics.</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                    <div class="bento-item glass-panel" style="align-items:center; text-align:center; opacity:0.4;">
+                        <div style="font-size:60px;">🔥</div>
+                        <h3>7 Dies de Ratxa</h3>
+                        <p>Connecta't 7 dies seguits a la plataforma.</p>
+                        <span class="badge" style="background:#475569;">Bloquejada</span>
+                    </div>
+                </div>
+            </div>
+
+            </div> <!-- End Views Container -->
         </main>
     </div>
+    
+    <!-- Game Modal Overlay -->
+    <div id="game-modal" class="modal-overlay" style="display: none;">
+        <div class="game-container glass-panel">
+            <div class="game-header">
+                <h3 id="game-title" style="font-size: 24px;"><i class="fa-solid fa-gamepad"></i> Snake</h3>
+                <button id="close-game" class="btn-primary" style="padding: 5px 15px; border-radius: 10px; font-size: 20px;">X</button>
+            </div>
+            <div class="game-area">
+                <canvas id="snake-game" width="400" height="400" style="background: rgba(0,0,0,0.8); border-radius: 15px; border: 2px solid var(--neon-purple);"></canvas>
+                <div id="game-score" style="font-size: 20px; font-weight: 800; display:flex; gap:20px; width:100%; justify-content:center;">
+                    <span>Puntuació: <span id="snake-score" style="color:var(--neon-pink)">0</span></span>
+                    <button id="start-game-btn" class="btn-primary" style="padding:5px 15px;">Iniciar / Reiniciar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Supabase Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="app.js"></script>
 </body>
 </html>
